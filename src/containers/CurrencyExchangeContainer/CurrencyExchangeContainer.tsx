@@ -57,12 +57,10 @@ const CurrencyEContainer: React.FunctionComponent<ICurrencyProps> = ({
     };
     const changeAction = (e: React.MouseEvent<HTMLSpanElement>) => {
         e.currentTarget.dataset.action === 'buy' ? setAction(true) : setAction(false);
-        setCurrencyAmount('', '')
     };
 
     const changeCurrentCurrency = (e: React.MouseEvent<HTMLLIElement>) => {
         e.currentTarget.dataset.currency && changeCurrency(e.currentTarget.dataset.currency);
-        setCurrencyAmount('', '')
     };
 
     return (
@@ -100,13 +98,13 @@ const mapStateToProps = (state: IGlobalState): CurrencyState => {
 
 const mapDispatchToProps = (dispatch: Dispatch<CurrencyReducersTypes>): MapDispatchPropsType => {
     return {
-        setCurrencyAmount: (amountOfBYN: string, amountOfCurrency: string) => {
+        setCurrencyAmount(amountOfBYN: string, amountOfCurrency: string) {
             dispatch(changeCurrencyFieldAC(amountOfBYN, amountOfCurrency));
         },
-        setAction: (isBuying: boolean) => {
+        setAction(isBuying: boolean) {
             dispatch(changeActionAC(isBuying));
         },
-        changeCurrency: (currency: string) => {
+        changeCurrency(currency: string) {
             dispatch(changeCurrentCurrencyAC(currency));
         },
     };
