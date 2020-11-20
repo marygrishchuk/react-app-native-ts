@@ -5,8 +5,8 @@ import {IGlobalState} from '../../redux/state';
 import {CurrencyState} from '../../redux/currencyReducer';
 import {compose, Dispatch} from 'redux';
 import {
-    ChangeActionAC,
-    ChangeCurrencyFieldAC,
+    changeActionAC,
+    changeCurrencyFieldAC,
     changeCurrentCurrencyAC,
     CurrencyReducersTypes,
 } from '../../redux/actions';
@@ -57,10 +57,12 @@ const CurrencyEContainer: React.FunctionComponent<ICurrencyProps> = ({
     };
     const changeAction = (e: React.MouseEvent<HTMLSpanElement>) => {
         e.currentTarget.dataset.action === 'buy' ? setAction(true) : setAction(false);
+        setCurrencyAmount('', '')
     };
 
     const changeCurrentCurrency = (e: React.MouseEvent<HTMLLIElement>) => {
         e.currentTarget.dataset.currency && changeCurrency(e.currentTarget.dataset.currency);
+        setCurrencyAmount('', '')
     };
 
     return (
@@ -80,7 +82,13 @@ const CurrencyEContainer: React.FunctionComponent<ICurrencyProps> = ({
     );
 };
 
-const mapStateToProps = (state: IGlobalState) => {
+type MapDispatchPropsType = {
+    setCurrencyAmount: (amountOfBYN: string, amountOfCurrency: string) => void;
+    setAction: (isBuying: boolean) => void;
+    changeCurrency: (currency: string) => void;
+}
+
+const mapStateToProps = (state: IGlobalState): CurrencyState => {
     return {
         currencies: state.currency.currencies,
         currentCurrency: state.currency.currentCurrency,
@@ -89,19 +97,19 @@ const mapStateToProps = (state: IGlobalState) => {
         amountOfCurrency: state.currency.amountOfCurrency,
     };
 };
-// @ts-ignore
-const mapDispatchToProps = (dispatch: Dispatch<CurrencyReducersTypes>) => {
+
+const mapDispatchToProps = (dispatch: Dispatch<CurrencyReducersTypes>): MapDispatchPropsType => {
     return {
-        setCurrencyAmount(amountOfBYN: string, amountOfCurrency: string) {
-            dispatch(ChangeCurrencyFieldAC(amountOfBYN, amountOfCurrency));
+        setCurrencyAmount: (amountOfBYN: string, amountOfCurrency: string) => {
+            dispatch(changeCurrencyFieldAC(amountOfBYN, amountOfCurrency));
         },
-        setAction(isBuying: boolean) {
-            dispatch(ChangeActionAC(isBuying));
+        setAction: (isBuying: boolean) => {
+            dispatch(changeActionAC(isBuying));
         },
-        changeCurrency(currency: string) {
+        changeCurrency: (currency: string) => {
             dispatch(changeCurrentCurrencyAC(currency));
         },
     };
 };
-// @ts-ignore
+
 export const CurrencyExchangeContainer = compose(connect(mapStateToProps, mapDispatchToProps))(CurrencyEContainer);
