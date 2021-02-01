@@ -20,14 +20,51 @@ console.log('lesson 2');
 // https://learn.javascript.ru/recursion
 // https://www.youtube.com/watch?v=Kuq6oIN3PH0
 
+// let param = 10
+//
+// function f(a, b, c, n) {
+//     console.log(a)
+//     function f1() {
+//         console.log(param)
+//         let a = 10
+//     }
+//     f1()
+// }
+
+// let a = 10
+//
+// function f(a: number) {
+//     function f1() {
+//         let a = 10
+//         let b = 100
+//         let c = 100
+//         console.log(a)
+//         c = a + b
+//     }
+//     f1()
+// }
+//
+// f(a)
+
+//Описание функции в жизни:
+//sum - суммирует 2 числа
+//a - число 1
+//b - число 2
+//возвращает сумму 2х чисел
+// function sum(a, b) {
+//     return a + b
+//     //1000 - методом подбора определил, что с 1с код работает прекрасно
+//     setTimeout(() => {}, 1000)
+// }
 
 // Task 01
 // Реализовать функцию sum которая суммирует 2 числа следующим образом sum(3)(6) === 9
 function sum(n: number) {
-    return function (b: number) {
-        return n + b
+    return function (n2: number) {
+        return n + n2
     }
 }
+console.log(sum(3)(6))
 
 let sum3 = sum(3)
 console.log(sum3(6))
@@ -55,14 +92,6 @@ console.log(sum3(6))
 // console.log(counter()); // 3
 
 
-let obj = {
-    a: 1
-}
-
-if (obj.a === 1 || obj.a === 2 || obj.a === 3) {
-    console.log("work")
-}
-
 // Task 03
 // Переписать функцию из Task 02 так, что бы она принимала число в качестве аргумента и это число было стартовым значением счетчика
 // и возвращала следующий объект методов:
@@ -75,7 +104,7 @@ function makeCounter(n: number) {
     let count = n
     return {
         increase: function () {
-            ++count
+            return ++count
         }, //это объект без this, неважно, стрелочная или нет
         decrease: () => --count,
         reset: () => {
@@ -99,6 +128,10 @@ console.log(counter.decrease()) //4
 console.log(counter.getCount()) //4
 console.log(counter.set(50)) //50
 console.log(counter.reset()) //0
+let counter2 = makeCounter(9) //независимый счетчик
+console.log(counter2.increase()) //10
+console.log(counter2.decrease()) //9
+console.log(counter2.decrease()) //8
 
 //Recursion
 // function sumTo(n: number): number {
